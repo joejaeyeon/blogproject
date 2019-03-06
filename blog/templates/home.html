@@ -10,10 +10,11 @@
 </head>
 {%extends 'base.html'%}
 {%block contents%}
+
 <body>
     <br><br>
     <div class="container">
-        {% for blogs in blogs.all %}
+        {% for blogs in posts %}
         <div class="card">
             <h5 class="card-header">{{blogs.title}}</h5>
             <div class="card-body">
@@ -24,7 +25,23 @@
         </div>
         <br><br>
         {%endfor%}
+
+        <!--First Previous-->
+        {%if posts.has_previous%}
+        <a href="?page=1">First</a>
+        <a href="?page={{posts.previous_page_number}}">Previous</a>
+        {%endif%}
+        <!--3of4-->
+        <span>{{posts.number}}</span>
+        <span>of</span>
+        <span>{{posts.paginator.num_pages}}</span>
+        <!--Next Last-->
+        {%if posts.has_next%}
+        <a href="?page={{posts.next_page_number}}">Next</a>
+        <a href="?page={{posts.paginator.num_pages}}">Last</a>
+        {%endif%}
     </div>
 </body>
 {%endblock%}
+
 </html>
