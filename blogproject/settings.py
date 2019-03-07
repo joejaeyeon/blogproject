@@ -1,3 +1,4 @@
+import dj_database_url
 """
 Django settings for blogproject project.
 
@@ -21,12 +22,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = 'yplvzkhx0#mu8mel6_kj!#^!0&pw541%glv-&oo8lqel3m9&8&'
-import os
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'yplvzkhx0#mu8mel6_kj!#^!0&pw541%glv-&oo8lqel3m9&8&')
+SECRET_KEY = os.environ.get(
+    'DJANGO_SECRET_KEY', 'yplvzkhx0#mu8mel6_kj!#^!0&pw541%glv-&oo8lqel3m9&8&')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
-DEBUG = bool( os.environ.get('DJANGO_DEBUG', True) )
+DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 
 ALLOWED_HOSTS = ['*']
 
@@ -46,8 +47,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -128,7 +129,7 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'portfolio', 'static')
-] # static 파일들이 현재 어디에 있는지를 쓰는 곳
+]  # static 파일들이 현재 어디에 있는지를 쓰는 곳
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 #static 파일들이 어디로 모일 것인지 쓰는 곳
@@ -138,6 +139,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 # Heroku: Update database configuration from $DATABASE_URL.
-import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
+
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
